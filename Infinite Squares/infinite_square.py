@@ -8,19 +8,12 @@ yellow = (255, 255, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
 purple = (125, 0, 130)
-colors = {
-    "red": red, 
-    "pink": pink, 
-    "orange": orange, 
-    "yellow": yellow, 
-    "green": green, 
-    "blue": blue, 
-    "purple": purple
-}
 next_color = "pink"
 
 def draw_infinite_square(starting_position: tuple, starting_length: int, length_decrement:float, angle: float):
-    turtle.speed(15)
+    turtle.speed(25)
+    if turtle.pencolor() == "black" or turtle.pencolor() == black:
+        turtle.speed(5)
     turtle.penup()
     turtle.goto(starting_position[0], starting_position[1])
     turtle.width(1)
@@ -28,7 +21,7 @@ def draw_infinite_square(starting_position: tuple, starting_length: int, length_
     turtle.pendown()
     length = starting_length
     while (length > 1):
-        if turtle.pencolor() == "black":
+        if turtle.pencolor() == "black" or turtle.pencolor() == black:
             turtle.forward(length)
         else:
             draw_with_color_change(length)
@@ -89,10 +82,13 @@ def change_color():
 
 
 def clear_screen():
+    current_color = turtle.pencolor()
     turtle.clear()
     # Bug or feature? After (or before) each square is drawn, turtle.reset() should be called if we want squares to be drawn in the same place each time
     # I like this "bug" though since it keeps things interesting, as square locations can vary if the screen is not cleared between squares, so I've kept it
     turtle.reset()
+    if current_color != black:
+        change_color_to_rainbow()
 
 
 def draw_first_square():
@@ -129,7 +125,7 @@ def change_color_to_black():
 
 def change_color_to_rainbow():
     global next_color
-    turtle.pencolor(colors["red"])
+    turtle.pencolor(red)
     next_color = "pink"
 
 
