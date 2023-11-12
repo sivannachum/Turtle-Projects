@@ -1,20 +1,34 @@
 import turtle
 
 black = (0, 0, 0)
-colors = [black]
+red = (255, 0, 0)
+pink = (231, 85, 128)
+orange = (255, 165, 0)
+yellow = (255, 255, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+purple = (125, 0, 130)
+colors = {
+    "red": red, 
+    "pink": pink, 
+    "orange": orange, 
+    "yellow": yellow, 
+    "green": green, 
+    "blue": blue, 
+    "purple": purple
+}
+next_color = "pink"
 
 def draw_infinite_square(starting_position: tuple, starting_length: int, length_decrement:float, angle: float):
     turtle.speed(15)
     turtle.penup()
     turtle.goto(starting_position[0], starting_position[1])
     turtle.width(1)
-    turtle.pencolor(colors[0])
-    
+
     turtle.pendown()
     length = starting_length
-    number_of_colors = len(colors)
     while (length > 1):
-        if number_of_colors == 1:
+        if turtle.pencolor() == "black":
             turtle.forward(length)
         else:
             draw_with_color_change(length)
@@ -22,26 +36,57 @@ def draw_infinite_square(starting_position: tuple, starting_length: int, length_
         turtle.left(angle)
 
 
-def draw_with_color_change(length: int):
-    current_color = turtle.pencolor()
-    current_color_index = 0
-    for index in range(len(colors)):
-        if (colors[index] == current_color):
-            current_color_index = index
-            break
-    
+def draw_with_color_change(length: int):    
     color_segment_length = 15
     total_num_color_changes = length//color_segment_length
     color_changes_made = 0
     while (color_changes_made <= total_num_color_changes):
         turtle.forward(color_segment_length)
-        current_color_index = (current_color_index+1)%len(colors)
-        current_color = colors[current_color_index]
-        turtle.pencolor(current_color)
+        change_color()
         color_changes_made += 1
 
     amount_left_to_draw = length-color_segment_length*total_num_color_changes
     turtle.forward(amount_left_to_draw)
+
+
+def change_color():
+    global next_color
+    current_color = turtle.pencolor()
+    r = int(current_color[0])
+    g = int(current_color[1])
+    b = int(current_color[2])
+    if next_color == "red":
+        current_color = (r+5, g, b-5)
+        if (current_color == red):
+            next_color = "pink" 
+    elif next_color == "pink":
+        current_color = (r-1, g+3, b+5)
+        if (current_color == (227, 84, 140)):
+            current_color = pink
+            next_color = "orange"
+    elif next_color == "orange":
+        current_color = (r+1, g+4, b-6)
+        if (current_color == (252, 169, 2)):
+            current_color = orange
+            next_color = "yellow"
+    elif next_color == "yellow":
+        current_color = (r, g+5, b)
+        if (current_color == yellow):
+            next_color = "green"
+    elif next_color == "green":
+        current_color = (r-17, g, b)
+        if (current_color == green):
+            next_color = "blue"
+    elif next_color == "blue":
+        current_color = (r, g-5, b+5)
+        if (current_color == blue):
+            next_color = "purple"
+    elif next_color == "purple":
+        current_color = (r+5, g, b-5)
+        if (current_color == purple):
+            next_color = "red" 
+    turtle.pencolor(current_color)
+
 
 def clear_screen():
     turtle.clear()
@@ -79,24 +124,18 @@ def draw_fourth_square():
 
 
 def change_color_to_black():
-    global colors
-    colors = [black]
+    turtle.pencolor(black)
 
 
 def change_color_to_rainbow():
-    global colors
-    red = (255, 0, 0)
-    pink = (255, 192, 103)
-    yellow = (255, 255, 0)
-    green = (0, 255, 0)
-    blue = (0, 0, 255)
-    purple = (128, 0, 128)
-    colors = [red, pink, yellow, green, blue, purple]
-
+    global next_color
+    turtle.pencolor(colors["red"])
+    next_color = "pink"
 
 
 turtle.penup()
 turtle.colormode(255)
+turtle.pencolor(black)
 turtle.goto(0, 40)
 turtle.write('Welcome to the infinite "squares" animator!', align='center', font=('Georgia', 20, 'normal'))
 turtle.goto(0, 0)
