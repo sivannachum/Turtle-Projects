@@ -1,7 +1,7 @@
 import turtle
 from color import get_new_pen_color, color_is_black, set_color_to_rainbow
 
-def draw_infinite_square(starting_position: tuple, starting_length: int, length_decrement:float, angle: float):
+def draw_infinite_square(starting_position: tuple, starting_length: int, length_decrement: float, angle: float):
     turtle.speed(25)
     if color_is_black(turtle.pencolor()):
         turtle.speed(5)
@@ -72,3 +72,8 @@ def draw_fourth_square():
     angle = 90.3
     draw_infinite_square(starting_position, starting_length, length_decrement, angle)
 
+
+def draw_user_square(starting_length: int, length_decrement: int, angle: float):
+    starting_position = (-turtle.window_width()/3, -turtle.window_height()/3 + 20)
+    starting_length = starting_length
+    draw_infinite_square(starting_position, starting_length, length_decrement, angle)
