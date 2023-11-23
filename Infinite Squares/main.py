@@ -1,10 +1,10 @@
 import turtle
-from color import black, change_color_to_black, change_color_to_rainbow
+from color import set_color_to_black, set_color_to_rainbow
 from draw import *
 
 turtle.penup()
 turtle.colormode(255)
-turtle.pencolor(black)
+set_color_to_black()
 turtle.goto(0, 40)
 turtle.write('Welcome to the infinite "squares" animator!', align='center', font=('Georgia', 20, 'normal'))
 turtle.goto(0, 0)
@@ -21,7 +21,7 @@ turtle.onkey(draw_first_square, '1')
 turtle.onkey(draw_second_square, '2')
 turtle.onkey(draw_third_square, '3')
 turtle.onkey(draw_fourth_square, '4')
-turtle.onkey(change_color_to_black, 'b')
-turtle.onkey(change_color_to_rainbow, 'r')
+turtle.onkey(set_color_to_black, 'b')
+turtle.onkey(set_color_to_rainbow, 'r')
 
 turtle.done()

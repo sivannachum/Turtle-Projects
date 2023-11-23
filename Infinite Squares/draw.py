@@ -1,9 +1,9 @@
 import turtle
-from color import draw_with_color_change, change_color_to_rainbow, black
+from color import get_new_pen_color, color_is_black, set_color_to_rainbow
 
 def draw_infinite_square(starting_position: tuple, starting_length: int, length_decrement:float, angle: float):
     turtle.speed(25)
-    if turtle.pencolor() == "black" or turtle.pencolor() == black:
+    if color_is_black(turtle.pencolor()):
         turtle.speed(5)
     turtle.penup()
     turtle.goto(starting_position[0], starting_position[1])
@@ -12,12 +12,27 @@ def draw_infinite_square(starting_position: tuple, starting_length: int, length_
     turtle.pendown()
     length = starting_length
     while (length > 1):
-        if turtle.pencolor() == "black" or turtle.pencolor() == black:
+        if color_is_black(turtle.pencolor()):
             turtle.forward(length)
         else:
             draw_with_color_change(length)
         length -= length_decrement
         turtle.left(angle)
+
+
+def draw_with_color_change(length: int):    
+    color_segment_length = 15
+    total_num_color_changes = length//color_segment_length
+    color_changes_made = 0
+    while (color_changes_made <= total_num_color_changes):
+        turtle.forward(color_segment_length)
+        current_color = turtle.pencolor()
+        new_color = get_new_pen_color(current_color)
+        turtle.pencolor(new_color)
+        color_changes_made += 1
+
+    amount_left_to_draw = length-color_segment_length*total_num_color_changes
+    turtle.forward(amount_left_to_draw)
 
 
 def clear_screen():
@@ -26,8 +41,8 @@ def clear_screen():
     # Bug or feature? After (or before) each square is drawn, turtle.reset() should be called if we want squares to be drawn in the same place each time
     # I like this "bug" though since it keeps things interesting, as square locations can vary if the screen is not cleared between squares, so I've kept it
     turtle.reset()
-    if current_color != black and current_color != "black":
-        change_color_to_rainbow()
+    if not color_is_black(current_color):
+        set_color_to_rainbow()
 
 
 def draw_first_square():
